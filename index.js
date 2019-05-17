@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-let port = 8080
+let port = process.argv[2] || 2223
 
 
 const MongoClient = require('mongodb').MongoClient;
