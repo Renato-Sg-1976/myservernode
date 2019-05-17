@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
+const todos = require('./routes/todos')
 let port = process.argv[2] || 2223
-
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
@@ -16,25 +16,22 @@ client.connect(err => {
   console.log('Connected');
 
   const db = client.db("servernode");
-  const collection = db.collection("todos");
+  const todos = db.collection("todos");
   
-  // read
-  client.db("servernode").collection("todos").find().toArray(function(err, result){
-
-
+  // READ
+  todos.find().toArray(function (err, result) {
     if (err) throw err
-    const todos = result
     console.log(result)
-
+    
     
   })
-  
+
    client.close();
 });
 
-// esercizio Nicola STEP1 - FINE
 
 
+app.use('/api/v1/todos', todos)
 app.use((req, res) =>{
     res.status(404).send('what ???')
 })
